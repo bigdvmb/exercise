@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todos</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+  </head>
+  <body>
+    <a href="create.html">Create new</a>
+    <h1>To dos</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Title</th>
+          <th>Completed</th>
+        </tr>
+      </thead>
+      <tbody id="todos-tbody"></tbody>
+    </table>
+    <script>
+      "use script";
+      let todosTbody = document.querySelector("#todos-tbody");
+      function fetchTodos() {
+        fetch("http://localhost:3000/todos")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (todos) {
+            todos.forEach(buildTodosTableRow);
+          });
+      }
+      fetchTodos();
+
+      function buildTodosTableRow(todo) {
+        let row = document.createElement("tr");
+        todosTbody.appendChild(row);
+
+        let cell1 = document.createElement("td");
+        cell1.innerText = todo.userId;
+        row.appendChild(cell1);
+
+        let cell2 = document.createElement("td");
+        cell2.innerText = todo.title;
+        row.appendChild(cell2);
+
+        let cell3 = document.createElement("td");
+        cell3.innerText = todo.completed;
+        row.appendChild(cell3);
+      }
+    </script>
+  </body>
+</html>
